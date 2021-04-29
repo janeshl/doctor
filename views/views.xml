@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_doctor_form">
+            <field name="name">doctor.doctor.form</field>
+            <field name="model">doctor.doctor</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="dname"/>
+                            <field name="spec"/>
+                        </group>
+                        <notebook>
+                            <page string="Patient Data">
+                                <field name="pids">
+                                    <tree editable="bottom">
+                                        <field name="pname"/>
+                                        <field name="addrs"/>
+                                        <field name="phno"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Hospital Data">
+                                <field name="hos">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="hname"/>
+                                        <field name="hadrs"/>
+                                        <field name="hphone"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="doc_list">
+            <field name="name">doctor list</field>
+            <field name="model">doctor.doctor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="dname"/>
+                    <field name="spec"/>
+                </tree>
+                  
+                
+              
+            </field>  
+        </record>
+
+        <record model="ir.actions.act_window" id="hospital.action_window">
+            <field name="name">doctor window</field>
+            <field name="res_model">doctor.doctor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.server" id="hospital.action_server">
+            <field name="name">hospital server</field>
+            <field name="model_id" ref="model_doctor_doctor"/>
+            <field name="state">code</field>
+            <field name="code">
+              action = {
+                "type": "ir.actions.act_window",
+                "view_mode": "tree,form",
+                "res_model": model._name,
+              }
+            </field>
+        </record>
+        <menuitem name="Hospital" id="hospital.menu_root"/>
+
+        <menuitem name="Menu 1" id="hospital.menu_1" parent="hospital.menu_root"/>
+        <menuitem name="Menu 2" id="hospital.menu_2" parent="hospital.menu_root"/>
+
+        <menuitem name="List" id="hospital.menu_1_list" parent="hospital.menu_1"
+              action="hospital.action_window"/>
+        <menuitem name="Server to list" id="hospital" parent="hospital.menu_2"
+              action="hospital.action_server"/>
+        
+    </data> 
+</odoo>
